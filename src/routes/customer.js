@@ -6,17 +6,13 @@ const CustomerServiceFactory = require('../db/factory');
 const CustomerController = require('../controllers/customer');
 
 // Create the service and controller
-const customerService = CustomerServiceFactory.create('fake');
+const customerService = CustomerServiceFactory.create();
 const customerController = new CustomerController(customerService);
 
 // Create the handler instance
 const customerHandler = new CustomerHttpHandler(customerController);
 
 // Set up routes with bound handler methods
-router.get('/', customerHandler.getAllCustomers.bind(customerHandler));
-router.get('/:id', customerHandler.getCustomerById.bind(customerHandler));
-router.post('/', customerHandler.createCustomer.bind(customerHandler));
-router.put('/:id', customerHandler.updateCustomer.bind(customerHandler));
-router.delete('/:id', customerHandler.deleteCustomer.bind(customerHandler));
+router.get('/:username/:password', customerHandler.getLogin.bind(customerHandler));
 
 module.exports = router;

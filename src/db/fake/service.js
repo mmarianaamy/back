@@ -6,11 +6,27 @@ class FakeService extends DBService {
     this.customers = new Map();
     // Initialize with 5 dummy customers
     const dummyCustomers = [
-      { id: '1', name: 'John Doe', email: 'john.doe@example.com' },
-      { id: '2', name: 'Jane Smith', email: 'jane.smith@example.com' },
-      { id: '3', name: 'Bob Johnson', email: 'bob.johnson@example.com' },
-      { id: '4', name: 'Alice Brown', email: 'alice.brown@example.com' },
-      { id: '5', name: 'Charlie Wilson', email: 'charlie.wilson@example.com' },
+      {
+        id: '1',
+        usuario: 'sandra.g',
+        contra: 'latte123',
+        nombre: 'Sandra García',
+        num: '5001',
+      },
+      {
+        id: '2',
+        usuario: 'roberto.m',
+        contra: 'capuccino456',
+        nombre: 'Roberto Martínez',
+        num: '5002',
+      },
+      {
+        id: '3',
+        usuario: 'esteban.l',
+        contra: 'espresso789',
+        nombre: 'Esteban López',
+        num: '5003',
+      },
     ];
 
     dummyCustomers.forEach((customer) => {
@@ -18,29 +34,14 @@ class FakeService extends DBService {
     });
   }
 
-  async getAllCustomers() {
-    return Array.from(this.customers.values());
-  }
-
-  async getCustomerById(id) {
-    return this.customers.get(id);
-  }
-
-  async createCustomer(name, email) {
-    const id = Date.now().toString();
-    const customer = { id, name, email };
-    this.customers.set(id, customer);
-    return customer;
-  }
-
-  async updateCustomer(id, name, email) {
-    const customer = { id, name, email };
-    this.customers.set(id, customer);
-    return customer;
-  }
-
-  async deleteCustomer(id) {
-    this.customers.delete(id);
+  async getCustomerLogin(username, password) {
+    // eslint-disable-next-line consistent-return, no-restricted-syntax
+    for (const customer of this.customers.values()) {
+      if (customer.usuario === username && customer.contra === password) {
+        return { nombre: customer.nombre, num: customer.num };
+      }
+    }
+    return null;
   }
 }
 
